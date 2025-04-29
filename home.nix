@@ -5,6 +5,7 @@
       hello
       cowsay
       lolcat
+      home-manager
     ];
 
     username = "egor";
