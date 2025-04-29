@@ -11,8 +11,10 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: 
     let
-      pkgs = import nixpkgs {};
-    in {
+      linux_pkgs = import nixpkgs { system = "x86_64-linux";};
+      darwin_pkgs = import nixpkgs { system = "x86_64-darwin";};
+    in 
+    {
     nixosConfigurations.gw0 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -27,13 +29,15 @@
     };
     
     homeConfigurations.lab = home-manager.lib.homeManagerConfiguration {
-      system = "x86_64-linux";
-      inherit pkgs;
-      modules = [ ./home.nix ];
+      pkgs = linux_pkgs;
+      modules = [ 
+          ./common/home.nix
+        ];
     };
 
     homeConfigurations.mac = home-manager.lib.homeManagerConfiguration {
-      system = "x86_64-darwin";
+      pkgs = darwin_pkgs;
     };
+    
   };
 }
