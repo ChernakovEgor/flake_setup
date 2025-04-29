@@ -10,4 +10,12 @@
 
     stateVersion = "25.05";
   };
+
+  programs = {
+    git = {
+      enable = true;
+      userName = "Chernakov Egor";
+      userEmail = "chernakov.eg@gmail.com";
+    };
+  };
 }
