@@ -7,8 +7,8 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./nixos/hardware-configuration.nix
-      ./nixos/postgre.nix
+      ./hardware-configuration.nix
+      ./postgre.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -89,6 +89,7 @@
         set smartindent
         set ignorecase
         set smartcase
+        set relativenumber
         " Turn on syntax highlighting by default
         syntax on
         " ...
