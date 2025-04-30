@@ -30,6 +30,7 @@
     git
     neofetch
   ];
+  programs.zsh.enable = true;
 
   networking.hostName = "gw0"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -60,6 +61,7 @@
     ];
   };
 
+  users.defaultUserShell = pkgs.zsh;
   users.users.egor = {
     isNormalUser = true;
     extraGroups = [
