@@ -8,12 +8,6 @@
     stateVersion = "25.05";
   };
 
-  # generic packages
-  packages = with pkgs; [
-    # jq
-    hello
-    lolcat
-  ];
 
   # custom options for programs
   programs = {
@@ -23,7 +17,7 @@
       userEmail = "chernakov.eg@gmail.com";
     };
 
+    jq.enable = true;
+    home-manager.enable = true;
   };
- 
-  programs.home-manager.enable = true;
 }
