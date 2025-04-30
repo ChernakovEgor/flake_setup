@@ -14,6 +14,7 @@
     home-manager.enable = true;
     neovim.enable = true;
 
+
     git = {
       enable = true;
       userName = "Chernakov Egor";
