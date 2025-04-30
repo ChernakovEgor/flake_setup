@@ -17,13 +17,15 @@
       enable = true;
       userName = "Chernakov Egor";
       userEmail = "chernakov.eg@gmail.com";
-      defaultBranch = "main";
+      extraConfig = {
+        init = {defaultBranch = "main";};
+      };
     };
 
     zsh = {
       enable = true;
-      enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
       # shellAliases = {
       #   ll = "ls -l";
       #   cd = "z";
