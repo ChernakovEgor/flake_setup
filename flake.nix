@@ -1,15 +1,17 @@
 {
-  description = "Flake for NixOS server";
+  description = "Egor's setup";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }: 
     let
       linux_pkgs = import nixpkgs { system = "x86_64-linux";};
       darwin_pkgs = import nixpkgs { system = "x86_64-darwin";};
@@ -31,13 +33,15 @@
     homeConfigurations.lab = home-manager.lib.homeManagerConfiguration {
       pkgs = linux_pkgs;
       modules = [ 
-          ./common/home.nix
+          ./home-manager/home.nix
         ];
     };
 
-    homeConfigurations.mac = home-manager.lib.homeManagerConfiguration {
-      pkgs = darwin_pkgs;
+    darwinConfigurations."MacBook-Pro-Egor" = nix-darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
+      modules = [ 
+          ./darwin/configuration.nix
+        ];
     };
-    
   };
 }
