@@ -26,9 +26,8 @@
 
     zsh = {
       enable = true;
-      #enableCompletions = true;
-      #autosuggestions.enable = true;
-      syntaxHighlighting.enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
       # shellAliases = {
       #   ll = "ls -l";
       #   cd = "z";
@@ -39,10 +38,11 @@
         plugins = [
           "git"
           # "zsh-autosuggestions"
-          "powerlevel10k"
+
         ];
 
         theme = "robbyrussell";
+        # theme = "powerlevel10k/powerlevel10k";
       };
     };
   };
