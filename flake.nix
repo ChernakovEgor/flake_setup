@@ -39,7 +39,7 @@
         
       
 
-      homeConfigurations.lab = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.egor = home-manager.lib.homeManagerConfiguration {
         pkgs = linux_pkgs;
         modules = [
           ./home-manager/home.nix
