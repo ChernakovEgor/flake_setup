@@ -10,7 +10,9 @@
 
   # generic packages
   packages = with pkgs; [
-    jq
+    # jq
+    hello
+    lolcat
   ];
 
   # custom options for programs
