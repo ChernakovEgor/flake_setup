@@ -2,25 +2,33 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs,  ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./postgre.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./postgre.nix
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   environment.systemPackages = with pkgs; [
-      htop
-      go
-      git
-      neofetch
+    htop
+    go
+    git
+    neofetch
   ];
 
   networking.hostName = "gw0"; # Define your hostname.
@@ -42,43 +50,54 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-    networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 5432 ];
-      allowedUDPPortRanges = [
-      ];
-    };
-
-  users.users.egor = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "sudo"]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ 
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCsazuCgo6+RxglcPJ8ympq+IQpZxpEUgxr7uGv+2mMcPPfMAPvrZFSMI2nzrJrA0adKKz3TzfkPuHbjbbPqqXHgm0ecUWT/rmDtqKMILDrrDR2PqKashAlnTGtPcgxam6DkXO2UyAIR9427QRD5VvYCxw5i4VaGWpk+mD1j1gQLXYsLJqpA3Ipv0myAmFq8BKP4zwiSpgu/4QEVBg8iER2L1HmgK7Xp1peGMrR9k1S0dcYgcM+QXQ8nVxP/NRG38u+ZvP1wjnUknpJFMl8wlQoEC70n2jK30E3/InQViCR4TdEA+ineFZVRIojp0cgk4NRKSPQXA6v7YmPxXg//KZHKWaxqgZ+cDF+5GAE54Pbub/SH5vkNnV8UjQs3g9+uNGOEzh9q553H76nygn5iXBttRweqnmdpXGsi09HHfbmTBU/55t2CTOV9mrfrLXfjV8PpsCh6/LwRPJCcZ1L/kmYLU5NEg/4+X9BzzUGWhi7I7xu2Sak2SgsZ4qOrUCytYU= egor@lab"
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDTtKQksaieD3oUPPN7HxL89LZdSbDi84C3FEIVRW8oK+2uAgtL4VTrg241XQMBmcxPa3qBnK4OSri5On7Yxv4LXEZMWDukTOzHBp7T9gnUkbcjJHrKQk1mhJlOGpEUDcKJ6MuG1QVf+MmTY7SvTk3YuzPgxY3s0P3FO67UTq/M+W8L9l1p0GfZUd+HY684B0tKGvVhtpmC2hkz7wwpJXicH68SSF6YREw+d6SK/jmo4PUkzThj3/KhSxgXI0N+YgNC8GAbKqR/0k6cvmxI08zZhk+jehvShrMPBCwboPVebNO9tmxNwdqeOkyK1LK+PLmaWmtvViGCCRIrzACOgxQLvBU7KeNjblB295EWU5v32WPoDDN/QPBNIprMmJFhC9qExcFhV+tBbCKCGD71VIdmMar5h2ejte9D93zfZqPPu11BpPtCANZpiiQb+OLBKTqi75hIYcGWwVsjP4fJy6sRpN0D1Q15wuwdfFGIjlxfUfru3989FwpIR3dB0GgUeEM= egor@MacBook-Pro-Egor.local"
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      22
+      5432
+    ];
+    allowedUDPPortRanges = [
     ];
   };
 
-  security.sudo.extraRules= [
-      {  users = [ "egor" ];
-        commands = [
-           { command = "/run/current-system/sw/bin/vim";
-             options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
-          }
-        ];
-      }
-  ];
+  users.users.egor = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "docker"
+      "sudo"
+    ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCsazuCgo6+RxglcPJ8ympq+IQpZxpEUgxr7uGv+2mMcPPfMAPvrZFSMI2nzrJrA0adKKz3TzfkPuHbjbbPqqXHgm0ecUWT/rmDtqKMILDrrDR2PqKashAlnTGtPcgxam6DkXO2UyAIR9427QRD5VvYCxw5i4VaGWpk+mD1j1gQLXYsLJqpA3Ipv0myAmFq8BKP4zwiSpgu/4QEVBg8iER2L1HmgK7Xp1peGMrR9k1S0dcYgcM+QXQ8nVxP/NRG38u+ZvP1wjnUknpJFMl8wlQoEC70n2jK30E3/InQViCR4TdEA+ineFZVRIojp0cgk4NRKSPQXA6v7YmPxXg//KZHKWaxqgZ+cDF+5GAE54Pbub/SH5vkNnV8UjQs3g9+uNGOEzh9q553H76nygn5iXBttRweqnmdpXGsi09HHfbmTBU/55t2CTOV9mrfrLXfjV8PpsCh6/LwRPJCcZ1L/kmYLU5NEg/4+X9BzzUGWhi7I7xu2Sak2SgsZ4qOrUCytYU= egor@lab"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDTtKQksaieD3oUPPN7HxL89LZdSbDi84C3FEIVRW8oK+2uAgtL4VTrg241XQMBmcxPa3qBnK4OSri5On7Yxv4LXEZMWDukTOzHBp7T9gnUkbcjJHrKQk1mhJlOGpEUDcKJ6MuG1QVf+MmTY7SvTk3YuzPgxY3s0P3FO67UTq/M+W8L9l1p0GfZUd+HY684B0tKGvVhtpmC2hkz7wwpJXicH68SSF6YREw+d6SK/jmo4PUkzThj3/KhSxgXI0N+YgNC8GAbKqR/0k6cvmxI08zZhk+jehvShrMPBCwboPVebNO9tmxNwdqeOkyK1LK+PLmaWmtvViGCCRIrzACOgxQLvBU7KeNjblB295EWU5v32WPoDDN/QPBNIprMmJFhC9qExcFhV+tBbCKCGD71VIdmMar5h2ejte9D93zfZqPPu11BpPtCANZpiiQb+OLBKTqi75hIYcGWwVsjP4fJy6sRpN0D1Q15wuwdfFGIjlxfUfru3989FwpIR3dB0GgUeEM= egor@MacBook-Pro-Egor.local"
+    ];
+  };
 
+  security.sudo.extraRules = [
+    {
+      users = [ "egor" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/vim";
+          options = [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
+        }
+      ];
+    }
+  ];
 
   # vim
   programs.vim = {
     enable = true;
     defaultEditor = true;
-    package = (pkgs.vim_configurable.override {  }).customize{
+    package = (pkgs.vim_configurable.override { }).customize {
       name = "vim";
       # Install plugins for example for syntax highlighting of nix files
       vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [ vim-nix vim-lastplace ];
-        opt = [];
+        start = [
+          vim-nix
+          vim-lastplace
+        ];
+        opt = [ ];
       };
       vimrcConfig.customRC = ''
         " your custom vimrc
@@ -105,17 +124,15 @@
   #   enableSSHSupport = true;
   # };
 
-
   # sshd
   services.openssh = {
-   enable = true;
-   ports = [ 22 ];
+    enable = true;
+    ports = [ 22 ];
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
   };
-
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -125,4 +142,3 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
 }
-

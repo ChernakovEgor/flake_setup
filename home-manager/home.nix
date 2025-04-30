@@ -1,4 +1,4 @@
-{ lib, pkgs, ...}:
+{ lib, pkgs, ... }:
 {
   home = {
 
@@ -7,7 +7,6 @@
 
     stateVersion = "25.05";
   };
-
 
   # custom options for programs
   programs = {
@@ -20,25 +19,26 @@
       userEmail = "chernakov.eg@gmail.com";
       defaultBranch = "main";
     };
-    
+
     zsh = {
       enable = true;
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
-    # shellAliases = {
-    #   ll = "ls -l";
-    #   cd = "z";
-    # };
+      # shellAliases = {
+      #   ll = "ls -l";
+      #   cd = "z";
+      # };
 
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
           "git"
           # "zsh-autosuggestions"
           "powerlevel10k"
-      ];
+        ];
 
-      theme = "robbyrussell";
+        theme = "robbyrussell";
+      };
     };
   };
 }
