@@ -1,9 +1,6 @@
 { lib, pkgs, ...}:
 {
   home = {
-    packages = with pkgs; [
-      home-manager
-    ];
 
     username = "egor";
     homeDirectory = "/home/egor";
@@ -11,11 +8,20 @@
     stateVersion = "25.05";
   };
 
+  # generic packages
+  packages = with pkgs; [
+    jq
+  ];
+
+  # custom options for programs
   programs = {
     git = {
       enable = true;
       userName = "Chernakov Egor";
       userEmail = "chernakov.eg@gmail.com";
     };
+
   };
+ 
+  programs.home-manager.enable = true;
 }
