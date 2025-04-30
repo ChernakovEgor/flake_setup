@@ -6,7 +6,7 @@
     [ 
       # pkgs.vim
       pkgs.hello
-      pkgs.cowsay
+      # pkgs.cowsay
     ];
 
   # Necessary for using flakes on this system.

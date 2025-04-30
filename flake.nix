@@ -51,7 +51,6 @@
         modules = [
           ./darwin/configuration.nix
         ];
-        inherit self;
       };
     };
 }
