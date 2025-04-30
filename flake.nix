@@ -51,5 +51,5 @@
           ./darwin/configuration.nix
         ];
       };
-    };
+    }
 }
