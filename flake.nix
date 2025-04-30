@@ -27,12 +27,12 @@
       nixosConfigurations.gw0 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./nixos/configuration.nix
         home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.egor = import ./home.nix;
+            home-manager.users.egor = import ./home-manager/home.nix;
         }
       ];
     };
