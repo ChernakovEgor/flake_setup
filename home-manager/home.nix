@@ -12,6 +12,7 @@
   programs = {
     jq.enable = true;
     home-manager.enable = true;
+    neovim.enable = true;
 
     git = {
       enable = true;
@@ -22,8 +23,7 @@
       };
     };
 
-    neovim.enable = true;
-
+    
     zsh = {
       enable = true;
       enableAutosuggestions = true;

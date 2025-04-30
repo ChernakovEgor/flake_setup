@@ -2,14 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -77,30 +77,73 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+	fonts.packages = with pkgs; [
+	  nerd-fonts.jetbrains-mono
+	];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.egor = {
     isNormalUser = true;
     description = "Chernakov Egor";
     extraGroups = ["sudo" "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
+      steam
+      telegram-desktop
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # packages for steam
+	
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "steam"
+    "steam-original"
+    "steam-unwrapped"
+    "steam-run"
+  ];
+	
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      git
   ];
+
+  programs.firefox.enable = true;
+  programs.steam.enable = true;
+  programs.zsh.enable = true;
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+    package = (pkgs.vim_configurable.override { }).customize {
+      name = "vim";
+      # Install plugins for example for syntax highlighting of nix files
+      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+        start = [
+          vim-nix
+          vim-lastplace
+        ];
+        opt = [ ];
+      };
+      vimrcConfig.customRC = ''
+        " your custom vimrc
+        set expandtab
+        set tabstop=4
+        set shiftwidth=4
+        set autoindent
+        set smartindent
+        set ignorecase
+        set smartcase
+        set relativenumber
+        " Turn on syntax highlighting by default
+        syntax on
+        " ...
+      '';
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
