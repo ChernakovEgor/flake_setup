@@ -11,37 +11,45 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }: 
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      ...
+    }:
     let
-      linux_pkgs = import nixpkgs { system = "x86_64-linux";};
-      darwin_pkgs = import nixpkgs { system = "x86_64-darwin";};
-    in 
+      linux_pkgs = import nixpkgs { system = "x86_64-linux"; };
+      darwin_pkgs = import nixpkgs { system = "x86_64-darwin"; };
+    in
     {
-    nixosConfigurations.gw0 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager {
+      nixosConfigurations.gw0 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
             home-manager.users.egor = import ./home.nix;
-        }
-      ];
-    };
-    
-    homeConfigurations.lab = home-manager.lib.homeManagerConfiguration {
-      pkgs = linux_pkgs;
-      modules = [ 
+          }
+        ];
+      };
+
+      homeConfigurations.lab = home-manager.lib.homeManagerConfiguration {
+        pkgs = linux_pkgs;
+        modules = [
           ./home-manager/home.nix
         ];
-    };
+      };
 
-    darwinConfigurations."MacBook-Pro-Egor" = nix-darwin.lib.darwinSystem {
-      system = "x86_64-darwin";
-      modules = [ 
+      darwinConfigurations."MacBook-Pro-Egor" = nix-darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
           ./darwin/configuration.nix
         ];
+      };
     };
-  };
 }
