@@ -12,7 +12,12 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
   networking.hostName = "takanuwa"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -81,6 +86,7 @@
       thunderbird
       steam
       telegram-desktop
+      bitwarden-desktop
       nodejs
       tree-sitter
       fzf
