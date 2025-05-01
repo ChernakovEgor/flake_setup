@@ -98,6 +98,7 @@
       kdePackages.kate
       thunderbird
       steam
+      mangohud
       telegram-desktop
       bitwarden-desktop
       nodejs
