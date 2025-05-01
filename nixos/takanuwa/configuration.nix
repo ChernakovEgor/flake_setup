@@ -113,6 +113,7 @@
       lua51Packages.lua
       lua51Packages.jsregexp
       luajitPackages.luarocks-nix
+      talosctl
     ];
   };
 
