@@ -27,7 +27,7 @@
       nixosConfigurations.gw0 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./nixos/configuration.nix
+          ./nixos/gw0/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
