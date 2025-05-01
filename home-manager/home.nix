@@ -9,34 +9,34 @@
   };
 
   # custom options for programs
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-    package = (pkgs.vim_configurable.override { }).customize {
-      name = "vim";
-      # Install plugins for example for syntax highlighting of nix files
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [
-          vim-nix
-          vim-lastplace
-        ];
-        opt = [ ];
-      };
-      vimrcConfig.customRC = ''
-        " your custom vimrc
-        set expandtab
-        set tabstop=4
-        set shiftwidth=4
-        set autoindent
-        set smartindent
-        set ignorecase
-        set smartcase
-        set relativenumber
-        " Turn on syntax highlighting by default
-        syntax on
-        " ...
-      '';
-    };
+  # programs.vim = {
+  #   enable = true;
+  #   defaultEditor = true;
+    # package = (pkgs.vim_configurable.override { }).customize {
+    #   name = "vim";
+    #   # Install plugins for example for syntax highlighting of nix files
+    #   vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+    #     start = [
+    #       vim-nix
+    #       vim-lastplace
+    #     ];
+    #     opt = [ ];
+    #   };
+    #   vimrcConfig.customRC = ''
+    #     " your custom vimrc
+    #     set expandtab
+    #     set tabstop=4
+    #     set shiftwidth=4
+    #     set autoindent
+    #     set smartindent
+    #     set ignorecase
+    #     set smartcase
+    #     set relativenumber
+    #     " Turn on syntax highlighting by default
+    #     syntax on
+    #     " ...
+    #   '';
+    # };
   };
   programs = {
     jq.enable = true;
