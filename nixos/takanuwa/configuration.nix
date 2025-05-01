@@ -74,6 +74,19 @@
   };
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+  environment.systemPackages = with pkgs; [
+    nixfmt-rfc-style
+    vim
+    git
+    htop
+    gnumake
+    cmake
+    gcc
+    wget
+    unzip
+    python3
+    wl-clipboard
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.egor = {
@@ -108,18 +121,6 @@
       "steam-run"
     ];
 
-  environment.systemPackages = with pkgs; [
-    nixfmt-rfc-style
-    vim
-    git
-    htop
-    gnumake
-    cmake
-    gcc
-    wget
-    unzip
-    python3
-  ];
   # custom options for programs
   programs.vim = {
     enable = true;
