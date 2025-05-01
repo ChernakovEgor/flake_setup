@@ -104,6 +104,8 @@
      git
      htop
      fzf
+     make
+     cmake
   ];
 
   programs.firefox.enable = true;
