@@ -67,16 +67,8 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 	fonts.packages = with pkgs; [
 	  nerd-fonts.jetbrains-mono
 	];
@@ -110,40 +102,13 @@
   environment.systemPackages = with pkgs; [
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      git
+     htop
+     fzf
   ];
 
   programs.firefox.enable = true;
   programs.steam.enable = true;
   programs.zsh.enable = true;
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-    package = (pkgs.vim_configurable.override { }).customize {
-      name = "vim";
-      # Install plugins for example for syntax highlighting of nix files
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [
-          vim-nix
-          vim-lastplace
-        ];
-        opt = [ ];
-      };
-      vimrcConfig.customRC = ''
-        " your custom vimrc
-        set expandtab
-        set tabstop=4
-        set shiftwidth=4
-        set autoindent
-        set smartindent
-        set ignorecase
-        set smartcase
-        set relativenumber
-        " Turn on syntax highlighting by default
-        syntax on
-        " ...
-      '';
-    };
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
