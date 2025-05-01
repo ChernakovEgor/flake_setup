@@ -42,13 +42,13 @@
         system = "x86_64-linux";
         modules = [
           ./nixos/takanuwa/configuration.nix
-         home-manager.nixosModules.home-manager
-         {
-           home-manager.useGlobalPkgs = true;
-           home-manager.useUserPackages = true;
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
-           home-manager.users.egor = import ./home-manager/home.nix;
-         }
+            home-manager.users.egor = import ./home-manager/home.nix;
+          }
         ];
       };
 

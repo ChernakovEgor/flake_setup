@@ -5,10 +5,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -69,44 +68,51 @@
     pulse.enable = true;
   };
 
-	fonts.packages = with pkgs; [
-	  nerd-fonts.jetbrains-mono
-	];
+  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.egor = {
     isNormalUser = true;
     description = "Chernakov Egor";
-    extraGroups = ["sudo" "networkmanager" "wheel" ];
+    extraGroups = [ "sudo" "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
       steam
       telegram-desktop
+      nodejs
+      tree-sitter
+      fzf
+      fd
+      lua51Packages.lua
+      lua51Packages.jsregexp
+      luajitPackages.luarocks-nix
     ];
   };
 
-
   nixpkgs.config.allowUnfree = true;
   # packages for steam
-	
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "steam"
-    "steam-original"
-    "steam-unwrapped"
-    "steam-run"
-  ];
-	
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-unwrapped"
+      "steam-run"
+    ];
 
   environment.systemPackages = with pkgs; [
-     vim
-     git
-     htop
-     fzf
-     gnumake
-     cmake
-     gcc
+    nixfmt-rfc-style
+    vim
+    git
+    htop
+    gnumake
+    cmake
+    gcc
+    wget
+    unzip
+    python3
   ];
   # custom options for programs
   programs.vim = {
@@ -116,10 +122,7 @@
       name = "vim";
       # Install plugins for example for syntax highlighting of nix files
       vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [
-          vim-nix
-          vim-lastplace
-        ];
+        start = [ vim-nix vim-lastplace ];
         opt = [ ];
       };
       vimrcConfig.customRC = ''
@@ -169,13 +172,11 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-# Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
+  # Enable OpenGL
+  hardware.graphics = { enable = true; };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -201,7 +202,7 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
