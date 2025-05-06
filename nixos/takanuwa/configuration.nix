@@ -100,10 +100,12 @@
       kdePackages.kate
       thunderbird
       steam
+      audacious
       mangohud
       telegram-desktop
       bitwarden-desktop
       obsidian
+      digikam
 
       # utilities
       nodejs
@@ -188,6 +190,7 @@
   system.stateVersion = "24.11"; # Did you read the comment?
   # Enable OpenGL
   hardware.graphics = { enable = true; };
+  hardware.bluetooth.enable = true;
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
