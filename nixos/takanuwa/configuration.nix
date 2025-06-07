@@ -75,9 +75,18 @@
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
   environment.systemPackages = with pkgs; [
+    # plasma apps
+    kdePackages.ksystemlog
+    kdePackages.isoimagewriter
+    kdePackages.partitionmanager
+    wl-clipboard
+    wayland-utils
+    hardinfo2
+
     nixfmt-rfc-style
     vim
     git
+    dig
     htop
     gnumake
     cmake
@@ -85,11 +94,12 @@
     wget
     unzip
     python3
-    wl-clipboard
   ];
   environment.variables = rec { MANGOHUD = 1; };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ dotnetCorePackages.sdk_9_0_1xx ];
   users.users.egor = {
     isNormalUser = true;
     description = "Chernakov Egor";
@@ -106,6 +116,9 @@
       bitwarden-desktop
       obsidian
       digikam
+      unityhub
+      vscode
+      dotnetCorePackages.sdk_9_0_1xx
 
       # utilities
       nodejs
@@ -161,6 +174,13 @@
   programs.firefox.enable = true;
   programs.steam.enable = true;
   programs.zsh.enable = true;
+
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
+
+  # services.xrdp.enable = true;
+  # services.xrdp.defaultWindowManager = "startplasma-x11";
+  # services.xrdp.openFirewall = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
