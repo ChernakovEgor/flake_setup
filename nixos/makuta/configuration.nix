@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -75,47 +75,76 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-unwrapped"
+      "steam-run"
+    ];
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.egor = {
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Chernakov Egor";
     extraGroups = ["sudo" "networkmanager" "wheel" ];
     packages = with pkgs; [
+      # apps
       kdePackages.kate
-    #  thunderbird
+      thunderbird
+      steam
+      telegram-desktop
+      bitwarden-desktop
+      obsidian
+      digikam
+
+      # utilities
+      nodejs
+      tree-sitter
+      fzf
+      fd
+      lua51Packages.lua
+      lua51Packages.jsregexp
+      luajitPackages.luarocks-nix
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # system packages
+  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     git
-  #  wget
+    # plasma apps
+    kdePackages.ksystemlog
+    kdePackages.isoimagewriter
+    kdePackages.partitionmanager
+    wl-clipboard
+    wayland-utils
+    hardinfo2
+
+    nixfmt-rfc-style
+    vim
+    git
+    dig
+    htop
+    gnumake
+    cmake
+    gcc
+    wget
+    unzip
+    python3
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
