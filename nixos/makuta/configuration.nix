@@ -5,10 +5,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -87,16 +86,19 @@
   programs.zsh.enable = true;
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall =
+      true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
   users.users.egor = {
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Chernakov Egor";
-    extraGroups = ["sudo" "networkmanager" "wheel" ];
+    extraGroups = [ "sudo" "networkmanager" "wheel" ];
     packages = with pkgs; [
       # apps
       kdePackages.kate
@@ -118,8 +120,6 @@
     ];
   };
 
-
-
   # system packages
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
   environment.systemPackages = with pkgs; [
@@ -130,6 +130,7 @@
     wl-clipboard
     wayland-utils
     hardinfo2
+    kitty
 
     nixfmt-rfc-style
     vim
@@ -143,8 +144,6 @@
     unzip
     python3
   ];
-
-
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
