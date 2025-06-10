@@ -122,7 +122,7 @@
 
   # system packages
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
-  environment.variables.EDITOR = "neovim"
+  environment.variables.EDITOR = "nvim";
   environment.systemPackages = with pkgs; [
     # plasma apps
     kdePackages.ksystemlog
