@@ -5,13 +5,23 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [ 
+      (modulesPath + "/installer/scan/not-detected.nix")
+      ./pstate.nix
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  # Embedded controller wake-ups drain battery in s2idle on this device
+  # See https://lore.kernel.org/all/ZnFYpWHJ5Ml724Nv@ohnotp/
+  boot.kernelParams = [ "acpi.ec_no_wakeup=1" ];
+
+  # For the Qualcomm NFA765 [17cb:1103] wireless network controller
+  # See https://bugzilla.redhat.com/show_bug.cgi?id=2047878
+  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "5.16") pkgs.linuxPackages_latest;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/60058194-f523-498a-aa7a-72c0f701efbd";

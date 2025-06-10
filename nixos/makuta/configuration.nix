@@ -81,8 +81,9 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.egor = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "Chernakov Egor";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["sudo" "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird

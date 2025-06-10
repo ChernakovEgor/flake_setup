@@ -39,6 +39,8 @@
         theme = "robbyrussell";
       };
     };
+    
+    shell = pkgs.zsh;
 
     tmux = {
       enable = true;
