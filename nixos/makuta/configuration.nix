@@ -112,7 +112,7 @@
       calibre
       openfortivpn
       openssl
-      wireguard-ui
+      wireguard-tools
 
       # utilities
       nodejs
