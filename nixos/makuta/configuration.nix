@@ -110,6 +110,8 @@
       obsidian
       digikam
       calibre
+      openfortivpn
+      openssl
 
       # utilities
       nodejs
@@ -147,10 +149,6 @@
     unzip
     python3
   ];
-
-  # non-nix executables
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [ ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
