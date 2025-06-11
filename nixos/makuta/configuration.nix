@@ -8,6 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -146,6 +147,10 @@
     unzip
     python3
   ];
+
+  # non-nix executables
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
