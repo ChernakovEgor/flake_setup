@@ -108,6 +108,7 @@
       bitwarden-desktop
       obsidian
       digikam
+      calibre
 
       # utilities
       nodejs
