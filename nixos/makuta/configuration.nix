@@ -137,6 +137,11 @@
     wayland-utils
     hardinfo2
     kitty
+    libreoffice-qt
+    hunspell
+    hunspellDicts.uk_UA
+    hunspellDicts.ru_RU
+    jetbrains.datagrip
 
     nixfmt-rfc-style
     vim
