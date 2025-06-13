@@ -99,7 +99,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Chernakov Egor";
-    extraGroups = [ "sudo" "networkmanager" "wheel" ];
+    extraGroups = [ "sudo" "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       # apps
       kdePackages.kate
