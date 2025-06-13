@@ -115,6 +115,7 @@
       wireguard-tools
 
       # utilities
+      direnv
       pwgen
       nodejs
       tree-sitter
