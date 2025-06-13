@@ -115,6 +115,7 @@
       wireguard-tools
 
       # utilities
+      pwgen
       nodejs
       tree-sitter
       fzf
@@ -128,6 +129,7 @@
   # system packages
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
   environment.variables.EDITOR = "nvim";
+  virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
     # plasma apps
     kdePackages.ksystemlog
